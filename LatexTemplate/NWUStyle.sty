@@ -1,0 +1,217 @@
+
+\usepackage{graphicx}
+\graphicspath{{img/}}
+%\usepackage[citebordercolor={0 0 0.8}]{hyperref} %Un-comment this line if you want the citations and references to have hyperlinks (requires the hyperref package).
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+%\usepackage[longnamesfirst,round,semicolon,authoryear]{natbib}
+\usepackage[style=ieee]{biblatex} %[backend = biber,style = authoryear-ibid]
+\usepackage{adjustbox}
+\usepackage{chngpage}
+\usepackage{ifthen}
+\usepackage{eso-pic}
+\usepackage{pdfpages}
+\usepackage{caption}
+\usepackage{pdflscape}
+
+% --- headers/footers ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}                     % clear all header/footers
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\setlength{\headwidth}{\paperwidth} % span the full sheet
+\fancyhfoffset[L]{\dimexpr(\paperwidth-\textwidth)/2\relax}
+\fancyhfoffset[R]{\dimexpr(\paperwidth-\textwidth)/2\relax}
+
+\fancyfoot[C]{\thepage}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhfoffset[L]{\dimexpr(\paperwidth-\textwidth)/2\relax}
+  \fancyhfoffset[R]{\dimexpr(\paperwidth-\textwidth)/2\relax}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+%Change this according to where your .bib file is saved relative to your main file
+\addbibresource{bib/MyBib.bib}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+  left=20mm,
+	right=20mm,
+  top=30mm,
+	bottom=30mm 
+ }
+\renewcommand{\baselinestretch}{1.2} 
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{1em}
+
+
+%% OrcID inline logo 
+\newcommand*{\img}[1]{%
+    \raisebox{-.3\baselineskip}{%
+        \includegraphics[
+        height=\baselineskip,
+        width=\baselineskip,
+        keepaspectratio,
+        ]{#1}%
+    }%
+}
+
+%Set up variables
+%==========================================================
+%Set up the \StudentNumber variable. [required]
+
+% ---- holders (define once to avoid 'undefined' errors) ----
+\newcommand{\studentnumber}{} 
+\newcommand{\orcid}{} 
+\newcommand{\initials}{} 
+\newcommand{\firstname}{} 
+\newcommand{\surname}{}
+\newcommand{\module}{}
+\newcommand{\assignment}{}   
+\newcommand{\mytitle}{} 
+\newcommand{\mscorphd}{} 
+\newcommand{\myfield}{} 
+\newcommand{\givendate}{} 
+\newcommand{\supervisor}{} 
+\newcommand{\cosupervisor}{} 
+\newcommand{\assistantsupervisor}{}
+
+% ---- setters (now renew the holders) ----
+\newcommand{\StudentNumber}[1]{\renewcommand{\studentnumber}{#1}}
+\newcommand{\ORCID}[1]{\renewcommand{\orcid}{#1}}
+\newcommand{\Initials}[1]{\renewcommand{\initials}{#1}}
+\newcommand{\FirstName}[1]{\renewcommand{\firstname}{#1}}
+\newcommand{\Surname}[1]{\renewcommand{\surname}{#1}}
+\newcommand{\Module}[1]{\renewcommand{\module}{#1}}
+\newcommand{\Assignment}[1]{\renewcommand{\assignment}{#1}}
+\newcommand{\Title}[1]{\renewcommand{\mytitle}{#1}}
+\newcommand{\MScorPhD}[1]{\renewcommand{\mscorphd}{#1}}
+\newcommand{\Field}[1]{\renewcommand{\myfield}{#1}}
+\newcommand{\Date}[1]{\renewcommand{\givendate}{#1}}
+\newcommand{\Supervisor}[1]{\renewcommand{\supervisor}{#1}}
+\newcommand{\CoSupervisor}[1]{\renewcommand{\cosupervisor}{#1}}
+\newcommand{\AssistantSupervisor}[1]{\renewcommand{\assistantsupervisor}{#1}}
+
+% ----- ORCID toggle -----
+\newif\ifshoworcid
+\showorcidfalse % default: do not show ORCID image/line
+% \showorcidtrue % <- uncomment to show ORCID on the title page
+
+%Set up Macros
+%==========================================================
+%Macro for the printing of the optional co-supervisor name.
+\newcommand{\printcosupervisor}[1]{\ifthenelse{\equal{#1}{}}{}{\Large Co-supervisor: {#1}\\}}
+%Macro for the printing of the optional assistant supervisor name.
+\newcommand{\printasssupervisor}[1]{\ifthenelse{\equal{#1}{}}{}{\Large Assistant supervisor: {#1}\\}}
+
+%Set up environments
+%==========================================================
+%Create the Acknowledgements environment
+%\newenvironment{Acknowledgements}% environment name
+%{% begin code
+%	\setcounter{page}{1}
+%	\pagenumbering{roman}
+%	\section*{Acknowledgements}
+%}%
+%{
+%\clearpage
+%}% end code
+
+%Create the Abstract environment
+ \newenvironment{Abstract}[1]% environment name
+ {% begin code
+ 	\setcounter{page}{1}
+ 	\pagenumbering{roman}
+ 	\section*{Abstract}
+ }%
+ {
+ 	\clearpage
+ }% end code
+
+%Create the table of abbreviations environment
+%\newenvironment{TableOfAbbrev}% environment name
+%{% begin code
+%	\section*{Table of abbreviations}
+%}%
+%{
+%	\clearpage
+%}% end code
+
+
+%Set up new commands
+%==========================================================
+
+%Create the new '\cites' command
+%\newcommand\cites[1]{\citeauthor{#1}'s\ (\citeyear{#1})}
+
+%Set up the \AssistantSupervisor variable. [required]
+% \newcommand{\KeyWords}[1]{ 
+% 	{\vspace*{\fill}\\ \noindent\emph{Keywords:} {#1}}
+% }
+
+%Make the table of contents, list of figures and list of tables.
+\newcommand{\MakeTOCandLOFandLOT}{
+	\clearpage
+	\tableofcontents
+	\clearpage
+	\listoffigures
+	\clearpage
+	%\listoftables
+	%\clearpage
+}
+
+%Create the title page
+\newcommand{\MakeTitle}{
+
+\thispagestyle{empty}
+
+%\changetext{\baselineskip}{0em}{0em}{0em}{-50pt}
+%\tikz[remember picture,overlay] \node[opacity=1.0,anchor=north] at (current page.north){{\includegraphics[width=\paperwidth]{img/NWUBack}}};
+%\tikz[overlay,remember picture] \node[opacity=1.0,anchor=north] at (current page.north){{\includegraphics[width=\paperwidth]{img/NWUBack}}};
+\AddToShipoutPictureBG*{% 
+	\AtPageUpperLeft{\raisebox{-\height}{\includegraphics[width=0.8\paperwidth]{NWUBack}}}% }
+}
+  \vspace*{\fill}
+\begin{center}
+    \begin{minipage}{0.9\textwidth}
+      \centering
+      {\Huge\bfseries \mytitle\par}
+      \vspace{15mm}
+      {\Large Assignment: \assignment\par}
+      \vspace{10mm}
+      {\Large Module:\module\par}
+      \vspace{10mm}
+      {\Large \initials~\surname\par}
+      \vspace{5mm}
+      {\Large\textbf {Student number:} \large\studentnumber\par}
+      \vspace{15mm}
+      \ifshoworcid
+        \img{ORCID}\quad \textbf{orcid.org/\orcid}\par
+        \vspace{10mm}
+      \fi
+      {\large Report submitted in pursuit of the degree\emph{\mscorphd} in \myfield\ at the North-West University\par}
+      \vspace{20mm}
+      {\large Date: \givendate\par}
+    \end{minipage}
+  \end{center}
+  \vspace*{\fill}
+
+  \clearpage
+  \ClearShipoutPictureBG
+
+  % Start front matter in roman numerals (if you want roman for TOC/etc.)
+  \pagenumbering{roman}
+  \pagestyle{fancy}  % restore your footer numbers after the empty title page
+}
+
+
+
